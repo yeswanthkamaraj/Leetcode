@@ -1,36 +1,23 @@
 class Solution {
     public ArrayList < Integer > majorityElement(int[] nums) {
-     
-       int number1 = -1, number2 = -1, count1 = 0, count2 = 0, len = nums.length;
-    for (int i = 0; i < len; i++) {
-      if (nums[i] == number1)
-        count1++;
-      else if (nums[i] == number2)
-        count2++;
-      else if (count1 == 0) {
-        number1 = nums[i];
-        count1 = 1;
-      } else if (count2 == 0) {
-        number2 = nums[i];
-        count2 = 1;
-      } else {
-        count1--;
-        count2--;
+     ArrayList <Integer>list=new ArrayList < Integer >();
+     HashMap<Integer,Integer>fmap=new HashMap<Integer,Integer>();
+     for(int i=0;i<nums.length;i++){
+       int a=nums[i];
+       if(fmap.containsKey(a)){
+         int f=fmap.get(a);
+         fmap.put(a,f+1);
+       }
+       else{
+         fmap.put(a,1);
+       }
+
+     }
+      for(int i:fmap.keySet()){
+        if(fmap.get(i)>nums.length/3){
+          list.add(i);
+        }
       }
-    }
-    ArrayList < Integer > ans = new ArrayList < Integer > ();
-    count1 = 0;
-    count2 = 0;
-    for (int i = 0; i < len; i++) {
-      if (nums[i] == number1)
-        count1++;
-      else if (nums[i] == number2)
-        count2++;
-    }
-    if (count1 > len / 3)
-      ans.add(number1);
-    if (count2 > len / 3)
-      ans.add(number2);
-    return ans;
+      return list;
     }
 }
